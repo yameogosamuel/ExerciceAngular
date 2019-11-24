@@ -31,6 +31,8 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
 import {LeaderService} from './services/leader.service';
 import { LoginComponent } from './login/login.component';
 import {PromotionService} from './services/promotion.service';
+
+
 @NgModule({
   declarations: [
     AppComponent,
