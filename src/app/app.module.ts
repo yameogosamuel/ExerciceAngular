@@ -32,6 +32,8 @@ import {LeaderService} from './services/leader.service';
 import { LoginComponent } from './login/login.component';
 import {PromotionService} from './services/promotion.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {MatSliderModule} from '@angular/material';
+
 
 
 @NgModule({
@@ -64,7 +66,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatProgressSpinnerModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSliderModule
   ],
   entryComponents: [
     LoginComponent
