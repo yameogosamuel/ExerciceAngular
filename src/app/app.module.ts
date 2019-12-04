@@ -36,6 +36,7 @@ import { LoginComponent } from './login/login.component';
 import {PromotionService} from './services/promotion.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatSliderModule} from '@angular/material';
+import {ProcessHTTPMsgService} from './services/process-httpmsg.service';
 
 
 
@@ -80,6 +81,7 @@ import {MatSliderModule} from '@angular/material';
   providers: [DishService,
     LeaderService,
     PromotionService,
+    ProcessHTTPMsgService,
     {provide: 'BaseURL', useValue: baseURL}
     ],
   bootstrap: [AppComponent]
