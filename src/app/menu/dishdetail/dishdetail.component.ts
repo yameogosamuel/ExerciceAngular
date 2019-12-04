@@ -18,7 +18,7 @@ import {Comment} from '../../shared/comment';
   styleUrls: ['./dishdetail.component.scss']
 })
 export class DishdetailComponent implements OnInit {
-  @ViewChild('fform',{static:false}) commentFormDirective;
+  @ViewChild('cform',{static:false}) commentFormDirective;
 
   commentForm: FormGroup;
   comment: Comment;
@@ -27,24 +27,26 @@ export class DishdetailComponent implements OnInit {
   prev: string;
   next: string;
   errMess: string;
+  dishcopy: Dish;
 
   formErrors = {
-    'name': '',
-    'message': ''
+    'author': '',
+    'comment': ''
   };
 
   validationMessages = {
-    'name': {
-      'required':      'Name is required.',
-      'minlength':     'Name must be at least 2 characters long.',
-      'maxlength':     'Name cannot be more than 25 characters long.'
+    'author': {
+      'required':      'Author is required.',
+      'minlength':     'Author must be at least 2 characters long.',
+      'maxlength':     'Author cannot be more than 25 characters long.'
     },
-    'message': {
+    'comment': {
       'required':      'Comment is required.',
       'minlength':     'Comment must be at least 2 characters long.',
       'maxlength':     'Comment cannot be more than 100 characters long.'
     },
   };
+
 
 
   constructor(private dishService: DishService,
@@ -55,9 +57,11 @@ export class DishdetailComponent implements OnInit {
 
   ngOnInit() {
     this.dishService.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
-    this.route.params.pipe(switchMap((params: Params) => this.dishService.getDish(params['id'])))
-      .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id);},
-        errmess => this.errMess = <any>errmess);
+
+    this.route.params
+      .pipe(switchMap((params: Params) => this.dishService.getDish(params['id'])))
+      .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); },
+        errmess => this.errMess = <any>errmess );
   }
 
   setPrevNext(dishId: string) {
@@ -72,9 +76,9 @@ export class DishdetailComponent implements OnInit {
 
   createForm(): void {
     this.commentForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
-      message: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)] ],
-      date: [new Date()],
+      author: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
+      rating:5,
+      comment: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)] ],
     });
 
   this.commentForm.valueChanges
@@ -104,11 +108,22 @@ export class DishdetailComponent implements OnInit {
 
   onSubmit() {
     this.comment = this.commentForm.value;
+    this.comment.date = new Date().toISOString();
     console.log(this.comment);
-    this.commentForm.reset({
-      name: '',
-      message: ''
-    });
+
+    this.dishcopy.comments.push(this.comment);
+    this.dishService.putDish(this.dishcopy)
+      .subscribe(dish => {
+          this.dish = dish; this.dishcopy = dish;
+        },
+        errmess => { this.dish = null; this.dishcopy = null; this.errMess = <any>errmess; });
+
     this.commentFormDirective.resetForm();
+    this.commentForm.reset({
+      author: '',
+      rating:5,
+      comment: ''
+    });
+
   }
 }
