@@ -37,6 +37,7 @@ import {PromotionService} from './services/promotion.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatSliderModule} from '@angular/material';
 import {ProcessHTTPMsgService} from './services/process-httpmsg.service';
+import { HighlightDirective } from './directives/highlight.directive';
 
 
 
@@ -51,7 +52,8 @@ import {ProcessHTTPMsgService} from './services/process-httpmsg.service';
     AboutComponent,
     HomeComponent,
     ContactComponent,
-    LoginComponent
+    LoginComponent,
+    HighlightDirective
   ],
   imports: [
     BrowserModule,
