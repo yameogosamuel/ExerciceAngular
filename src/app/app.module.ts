@@ -38,6 +38,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatSliderModule} from '@angular/material';
 import {ProcessHTTPMsgService} from './services/process-httpmsg.service';
 import { HighlightDirective } from './directives/highlight.directive';
+import {FeedbackService} from './services/feedback.service';
 
 
 
@@ -80,10 +81,12 @@ import { HighlightDirective } from './directives/highlight.directive';
   entryComponents: [
     LoginComponent
   ],
-  providers: [DishService,
+  providers: [
+    DishService,
     LeaderService,
     PromotionService,
     ProcessHTTPMsgService,
+    FeedbackService,
     {provide: 'BaseURL', useValue: baseURL}
     ],
   bootstrap: [AppComponent]
